@@ -1,7 +1,13 @@
+#tkinter
 from _tkinter import *
-from tkinter import Tk, ttk
+from tkinter import Tk, ttk, LEFT, NW, RAISED
 import tkinter as tk
 from tkinter import NSEW
+from tkinter import Label
+
+
+#pillow
+from PIL import Image, ImageTk
 
 
 ################# cores ###############
@@ -41,6 +47,16 @@ frameMeio.grid(row=1,column=0, pady=1, padx=0, sticky=NSEW)
 frameBaixo = tk.Frame(janela, width=1043, height=300, bg=co1, relief='flat')
 frameBaixo.grid(row=1,column=0, pady=0, padx=10, sticky=NSEW)
 
+
+# Trabalhando no framde Cima
+
+#abrindo a imagem
+app_img = Image.open('Log.png')
+app_img = app_img.resize((45,45))
+app_img = ImageTk.PhotoImage(app_img)
+
+app_Logo = Label(frameCima, image=app_img, text="  Planejamento Pessoal", width=900, compound=LEFT, padx=5, relief=RAISED, anchor=NW, font=('Verdana 20 bold'), bg=co1, fg=co4)
+app_Logo.place(x=0, y=0)
 
 
 janela.mainloop()
