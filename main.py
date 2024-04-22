@@ -24,7 +24,8 @@ co5 = "#e06636"   # - profit
 co6 = "#038cfc"   # azul
 co7 = "#3fbfb9"   
 co8 = "#263238"   
-co9 = "#e9edf5"   
+co9 = "#e9edf5"  
+co10 = "#ffa500" #laranja
 
 colors = ['#5588bb', '#66bbbb','#99bb55', '#ee9944', '#444466', '#bb5555']
 
