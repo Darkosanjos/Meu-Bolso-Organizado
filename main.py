@@ -239,3 +239,5 @@ def exibir_tabela():
 
 exibir_tabela()
 janela.mainloop()
+
+#Voce esta no laboratotio 1
