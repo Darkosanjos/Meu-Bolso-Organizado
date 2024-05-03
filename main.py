@@ -1,7 +1,5 @@
-from _tkinter import *
-from tkinter import Tk, ttk, LEFT, NW, RAISED, Label, Frame
+from tkinter import Tk, ttk, LEFT, NW, RAISED, Label, Frame,NSEW,Entry,Button,RIDGE
 import tkinter as tk
-from tkinter import NSEW
 
 #pillow
 from PIL import Image, ImageTk
@@ -12,6 +10,10 @@ from tkinter.ttk import Progressbar
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import matplotlib.pyplot as plt
 from matplotlib.figure import Figure
+
+#Calendario
+from tkcalendar import Calendar, DateEntry
+from datetime import date
 
 ################# cores ###############
 
@@ -57,7 +59,7 @@ frame_Gra_pie.place(x=415, y=5)
 # Trabalhando no framde Cima
 
 #abrindo a imagem
-logoca =  r'C:\Users\bruno\OneDrive\Área de Trabalho\Gestor\IMGSbd\Logo.png'
+logoca =  r'C:\Users\bruno\Desktop\Python\Meu-Bolso-Organizado\IMGSbd\Logo.png'
 app_img = Image.open(logoca)
 app_img = app_img.resize((45,45))
 app_img = ImageTk.PhotoImage(app_img)
@@ -238,4 +240,94 @@ def exibir_tabela():
 
 
 exibir_tabela()
+
+#config despesas---------------------------------
+l_info = Label(frameOperacoes, text='Insira novas despesas', height=1, anchor=NW, font=('Verdana 10 bold'), bg=co1, fg=co4)
+l_info.place(x=10, y=10)
+#categoria---------------------------------
+l_categorias = Label(frameOperacoes, text='Categoria', height=1, anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
+l_categorias.place(x=10, y=40)
+
+#pegando as categorias
+categorias_funcao = ['Viagem','Comida','Roupa']
+categorias = []
+
+for i in categorias_funcao:
+    categorias.append(i[1])
+
+
+combo_categoria_despesas = ttk.Combobox(frameOperacoes, width=10, font=('Ivy 10'))
+combo_categoria_despesas['values'] = (categorias)
+combo_categoria_despesas.place(x=110, y=41)
+
+#despesas----------------
+l_cal_despesas = Label(frameOperacoes, text='Data', height=1, anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
+l_cal_despesas.place(x=10, y=70)
+e_cal_despesas = DateEntry(frameOperacoes, width=12, bg='darkgreen', fg='white', borderwidth=2, year=2024)
+e_cal_despesas.place(x=110 ,y=71)
+
+#valor---------
+l_valor_despesas = Label(frameOperacoes, text='Quantia total', height=1, anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
+l_valor_despesas.place(x=10, y=100)
+e_valor_despesas = Entry(frameOperacoes, width=14, justify='left', relief='solid')
+e_valor_despesas.place(x=110, y=101)
+
+#botão adicionar--------------------------------------
+add =  r'C:\Users\bruno\Desktop\Python\Meu-Bolso-Organizado\IMGSbd\add.png'
+img_add_despesas = Image.open(add)
+img_add_despesas = img_add_despesas.resize((17,17))
+img_add_despesas = ImageTk.PhotoImage(img_add_despesas)
+botao_inserir_despesas = Button(frameOperacoes, image=img_add_despesas, text=" Adicionar".upper(), width=80, compound=LEFT, anchor=NW, font=('Ivy 7 bold'), bg=co1, fg=co0, overrelief=RIDGE)
+botao_inserir_despesas.place(x=110, y=131)
+
+#botao de excluir
+l_excluir = Label(frameOperacoes, text=' Excluir ação', height=1, anchor=NW, font=('Ivy 10 bold'), bg=co1, fg=co4)
+l_excluir.place(x=10, y=190)
+
+
+lixo =  r'C:\Users\bruno\Desktop\Python\Meu-Bolso-Organizado\IMGSbd\lixo.png'
+img_deletar = Image.open(lixo)
+img_deletar = img_deletar.resize((17,17))
+img_deletar = ImageTk.PhotoImage(img_deletar)
+botao_deletar = Button(frameOperacoes, image=img_deletar, text=" Deletar".upper(), width=80, compound=LEFT, anchor=NW, font=('Ivy 7 bold'), bg=co1, fg=co0, overrelief=RIDGE)
+botao_deletar.place(x=110, y=190)
+
+#config receitas--------------------------------
+l_info = Label(frameConfig, text='Insira novas receitas', height=1, anchor=NW, font=('Verdana 10 bold'), bg=co1, fg=co4)
+l_info.place(x=10, y=10)
+
+#Calendario------------------
+l_cal_receitas = Label(frameConfig, text='Data', height=1, anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
+l_cal_receitas.place(x=10, y=40)
+e_cal_receiras = DateEntry(frameConfig, width=12, bg='darkgreen', fg='white', borderwidth=2, year=2024)
+e_cal_receiras.place(x=110 ,y=41)
+
+#valor---------
+l_valor_receitas = Label(frameConfig, text='Quantia total', height=1, anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
+l_valor_receitas.place(x=10, y=70)
+e_valor_receitas = Entry(frameConfig, width=14, justify='left', relief='solid')
+e_valor_receitas.place(x=110, y=71)
+
+add =  r'C:\Users\bruno\Desktop\Python\Meu-Bolso-Organizado\IMGSbd\add.png'
+img_add_receitas = Image.open(add)
+img_add_receitas = img_add_receitas.resize((17,17))
+img_add_receitas = ImageTk.PhotoImage(img_add_receitas)
+botao_inserir_receitas = Button(frameConfig, image=img_add_despesas, text=" Adicionar".upper(), width=80, compound=LEFT, anchor=NW, font=('Ivy 7 bold'), bg=co1, fg=co0, overrelief=RIDGE)
+botao_inserir_receitas.place(x=110, y=111)
+
+#operacao nova categoria------------------
+l_info = Label(frameConfig, text='Categoria', height=1, anchor=NW, font=('Ivy 10 bold'), bg=co1, fg=co4)
+l_info.place(x=10, y=160)
+
+e_valor_categoria = Entry(frameConfig, width=14, justify='left', relief='solid')
+e_valor_categoria.place(x=110, y=160)
+
+add =  r'C:\Users\bruno\Desktop\Python\Meu-Bolso-Organizado\IMGSbd\add.png'
+img_add_categoria = Image.open(add)
+img_add_categoria = img_add_categoria.resize((17,17))
+img_add_categoria = ImageTk.PhotoImage(img_add_categoria)
+botao_inserir_categoria = Button(frameConfig, image=img_add_categoria, text=" Adicionar".upper(), width=80, compound=LEFT, anchor=NW, font=('Ivy 7 bold'), bg=co1, fg=co0, overrelief=RIDGE)
+botao_inserir_categoria.place(x=110, y=190)
+
+
 janela.mainloop()
