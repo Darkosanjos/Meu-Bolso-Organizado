@@ -11,15 +11,15 @@ def inserir_categoria(i):
         query = "INSERT INTO Categoria (nome) VALUES (?)"
         cur.execute(query,i)
 
-#inserir receitas
-def inserir_categoria(i):
+#inserir receita
+def inserir_receita(i):
     with con:
         cur = con.cursor()
         query = "INSERT INTO Receitas (categoria, adicionando_em,valor) VALUES (?,?,?)"
         cur.execute(query,i)
 
 #inserir gastos
-def inserir_categoria(i):
+def inserir_gastos(i):
     with con:
         cur = con.cursor()
         query = "INSERT INTO Gastos (categoria, retirado_em,valor) VALUES (?,?,?)"
@@ -28,10 +28,10 @@ def inserir_categoria(i):
 
 #Deletes --------------------------------------------------------------
 
-def deletar_receitas(i):  
+def deletar_receita(i):  
     with con:
         cur = con.cursor()
-        query = "DELETE FROM Receitas WHERE id=?"
+        query = "DELETE FROM Receita WHERE id=?"
         cur.execute(query, i)
 
 def deletar_Gastos(i):  
@@ -56,7 +56,7 @@ def ver_categoria():
     return lista_itens
 
 #Ver Receitas
-def ver_receitas():
+def ver_receita():
     lista_itens = []
 
     with con:
@@ -80,3 +80,29 @@ def ver_gastos():
             lista_itens.append(l)
 
     return lista_itens
+
+
+#funcao para dados da tabela
+def tabela():
+    gastos = ver_gastos()
+    receitas = ver_receita()
+
+    tabela_lista = []
+
+    for i in gastos:
+        tabela_lista.append(i)
+
+    for i in receitas:
+        tabela_lista.append(i)
+
+    return tabela_lista
+
+
+#funcao para dados do grafico de barra
+def bar_valores():
+    #receita total
+    receita = ver_receita()
+    receita_lista = []
+
+    for i in receita:
+        receita_lista.append(i[3])
