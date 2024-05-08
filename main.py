@@ -16,7 +16,7 @@ from tkcalendar import Calendar, DateEntry
 from datetime import date
 
 #importanto funçoes da view
-from view import bar_valores, inserir_categoria,ver_categoria, inserir_receitas,inserir_gastos
+from view import bar_valores, inserir_categoria,ver_categoria, inserir_receita,inserir_gastos,tabela,deletar_receitas,deletar_gastos
 
 
 ################# cores ###############
@@ -102,11 +102,11 @@ def inserir_categoria_b():
     combo_categoria_despesas['values'] = (categoria)    
 
 
-#função inserir receitas
+#função inserir Despesas
 def inserir_receitas_b():
-    nome = 'Receita'
-    data = l_cal_receitas.get()
-    quantia = e_valor_receitas.get()
+    nome = combo_categoria_despesas.get()
+    data = e_cal_despesas.get()
+    quantia = e_valor_despesas.get()
 
     lista_inserir = [nome, data, quantia]
 
@@ -115,20 +115,50 @@ def inserir_receitas_b():
             messagebox.showerror('Error', 'Preencha todos os campos')
             return    
 
-    #chamando a funcao inserir receitas presente na view
-    inserir_receitas(lista_inserir)
+    #chamando a funcao inserir despesas presente na view
+    inserir_gastos(lista_inserir)
 
     messagebox.showinfo('Sucesso','Os dados foram inseridos com sucesso')
 
-    e_cal_receiras.delete(0,'end')
-    e_valor_receitas.delete(0,'end')
+    combo_categoria_despesas.delete(0, 'end')
+    e_cal_despesas.delete(0,'end')
+    e_valor_despesas.delete(0,'end')
 
-    #Atualizando dados
-    exibir_tabela()
-    percentagem()
-    grafico_bar()
-    resumo()
-    grafico_pie()
+   
+
+#funcao Deletar
+def deletar_dados():
+    try:
+        treev_dados = tree.focus()
+        treev_dicionario = tree.item(treev_dados)
+        treev_lista = treev_dicionario['values']
+        valor = treev_lista[0]
+        nome = treev_lista[1]
+
+        if nome =='Receita':
+            deletar_receitas([valor])
+            messagebox.showinfo('Sucesso', 'Os dados foram deletados com sucesso')
+
+             #Atualizando dados
+            exibir_renda()
+            percentagem()
+            grafico_bar()
+            resumo()
+            grafico_pie()
+
+        else:
+            deletar_gastos([valor])
+            messagebox.showinfo('Sucesso', 'Os dados foram deletados com sucesso')
+
+             #Atualizando dados
+            exibir_renda()
+            percentagem()
+            grafico_bar()
+            resumo()
+            grafico_pie()
+    except IndexError:
+        messagebox.showerror('Error','Selecione um dos dados da tabela')
+
 
 # Percentagem------------------------------
 def percentagem():
@@ -266,11 +296,11 @@ app_tabela = Label(frameMeio, text=' Tabela de Receitas e Despesas', anchor=NW, 
 app_tabela.place(x=5, y=309)
 
 # funcao para exibir a tabela
-def exibir_tabela():
+def exibir_renda():
      # creating a treeview with dual scrollbars
     tabela_head = ['#Id','Categoria','Data','Quantia']
 
-    lista_itens = [[0,2,3,4],[0,2,3,4],[0,2,3,4],[0,2,3,4]]
+    lista_itens = tabela()
     
     global tree
 
@@ -301,7 +331,7 @@ def exibir_tabela():
         tree.insert('', 'end', values=item)
 
 
-exibir_tabela()
+exibir_renda()
 
 #config despesas---------------------------------
 l_info = Label(frameOperacoes, text='Insira novas despesas', height=1, anchor=NW, font=('Verdana 10 bold'), bg=co1, fg=co4)
@@ -311,7 +341,7 @@ l_categorias = Label(frameOperacoes, text='Categoria', height=1, anchor=NW, font
 l_categorias.place(x=10, y=40)
 
 #pegando as categorias
-categorias_funcao = ['Viagem','Comida','Roupa']
+categorias_funcao = ver_categoria()
 categorias = []
 
 for i in categorias_funcao:
@@ -334,12 +364,12 @@ l_valor_despesas.place(x=10, y=100)
 e_valor_despesas = Entry(frameOperacoes, width=14, justify='left', relief='solid')
 e_valor_despesas.place(x=110, y=101)
 
-#botão adicionar--------------------------------------
+#botão adicionar despesas--------------------------------------
 add =  r'C:\Users\bruno\Desktop\Python\Meu-Bolso-Organizado\IMGSbd\add.png'
 img_add_despesas = Image.open(add)
 img_add_despesas = img_add_despesas.resize((17,17))
 img_add_despesas = ImageTk.PhotoImage(img_add_despesas)
-botao_inserir_despesas = Button(frameOperacoes, image=img_add_despesas, text=" Adicionar".upper(), width=80, compound=LEFT, anchor=NW, font=('Ivy 7 bold'), bg=co1, fg=co0, overrelief=RIDGE)
+botao_inserir_despesas = Button(frameOperacoes,command=inserir_receitas_b, image=img_add_despesas, text=" Adicionar".upper(), width=80, compound=LEFT, anchor=NW, font=('Ivy 7 bold'), bg=co1, fg=co0, overrelief=RIDGE)
 botao_inserir_despesas.place(x=110, y=131)
 
 #botao de excluir
@@ -351,7 +381,7 @@ lixo =  r'C:\Users\bruno\Desktop\Python\Meu-Bolso-Organizado\IMGSbd\lixo.png'
 img_deletar = Image.open(lixo)
 img_deletar = img_deletar.resize((17,17))
 img_deletar = ImageTk.PhotoImage(img_deletar)
-botao_deletar = Button(frameOperacoes, image=img_deletar, text=" Deletar".upper(), width=80, compound=LEFT, anchor=NW, font=('Ivy 7 bold'), bg=co1, fg=co0, overrelief=RIDGE)
+botao_deletar = Button(frameOperacoes,command=deletar_dados, image=img_deletar, text=" Deletar".upper(), width=80, compound=LEFT, anchor=NW, font=('Ivy 7 bold'), bg=co1, fg=co0, overrelief=RIDGE)
 botao_deletar.place(x=110, y=190)
 
 #config receitas--------------------------------
@@ -361,8 +391,8 @@ l_info.place(x=10, y=10)
 #Calendario------------------
 l_cal_receitas = Label(frameConfig, text='Data', height=1, anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
 l_cal_receitas.place(x=10, y=40)
-e_cal_receiras = DateEntry(frameConfig, width=12, bg='darkgreen', fg='white', borderwidth=2, year=2024)
-e_cal_receiras.place(x=110 ,y=41)
+e_cal_receitas = DateEntry(frameConfig, width=12, bg='darkgreen', fg='white', borderwidth=2, year=2024)
+e_cal_receitas.place(x=110 ,y=41)
 
 #valor---------
 l_valor_receitas = Label(frameConfig, text='Quantia total', height=1, anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
