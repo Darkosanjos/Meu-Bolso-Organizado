@@ -24,13 +24,15 @@ from view import bar_valores, inserir_categoria,ver_categoria, inserir_receita,i
 co0 = "#2e2d2b"  # Preta
 co1 = "#feffff"  # branca
 co2 = "#4fa882"  # verde
-co3 = "#38576b"  # valor
-co4 = "#403d3d"   # letra
-co5 = "#e06636"   # - profit
+co3 = "#38576b"  # Azul marinho claro
+co4 = "#403d3d"   # Vermelho
+co5 = "#e06636"   # Barro Vermelho
 co6 = "#038cfc"   # azul
-co7 = "#3fbfb9"   
-co8 = "#263238"   
-co9 = "#e9edf5"   
+co7 = "#3fbfb9"   #azul bebe
+co8 = "#263238"   #Preto azulado
+co9 = "#e9edf5"   #Branco
+co10 = "#dbe610" #amarelo
+co11 = "#1ae010" #Esmeralda
 
 colors = ['#5588bb', '#66bbbb','#99bb55', '#ee9944', '#444466', '#bb5555']
 
